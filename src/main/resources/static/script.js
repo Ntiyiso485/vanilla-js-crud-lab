@@ -1,3 +1,4 @@
+
 const employeeForm = document.getElementById("employeeForm");
 
 employeeForm.addEventListener("submit", async function (event) {
@@ -31,8 +32,98 @@ employeeForm.addEventListener("submit", async function (event) {
         employeeForm.reset();
 
     } catch (error) {
+
         console.error(error);
         alert("Something went wrong while registering employee.");
+
+    }
+
+});
+const searchBtn = document.getElementById("searchBtn");
+
+searchBtn.addEventListener("click", async function () {
+
+    const id = document.getElementById("employeeId").value;
+    const message = document.getElementById("message");
+
+    if (!id) {
+        message.textContent = "Please enter an employee ID.";
+        return;
+    }
+
+    try {
+
+        const response = await fetch(`/api/Employee/${id}`);
+
+        if (!response.ok) {
+            throw new Error("Employee not found");
+        }
+
+        const employee = await response.json();
+
+
+        document.getElementById("updateName").value = employee.name;
+        document.getElementById("updateSurname").value = employee.surname;
+        document.getElementById("updateEmail").value = employee.email;
+
+        message.textContent = "Employee found successfully!";
+        message.style.color = "green";
+
+    } catch (error) {
+
+        message.textContent = error.message;
+        message.style.color = "red";
+
+    }
+
+});
+
+
+
+const updateEmployeeForm = document.getElementById("updateEmployeeForm");
+
+updateEmployeeForm.addEventListener("submit", async function (event) {
+
+    event.preventDefault();
+
+
+    const id = document.getElementById("employeeId").value;
+
+    const employee = {
+        name: document.getElementById("updateName").value,
+        surname: document.getElementById("updateSurname").value,
+        email: document.getElementById("updateEmail").value
+    };
+
+    try {
+
+        const response = await fetch(`/api/Employee/${id}`, {
+
+            method: "PUT",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(employee)
+
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to update employee");
+        }
+
+        const updatedEmployee = await response.json();
+
+        alert("Employee updated successfully! ID: " + updatedEmployee.id);
+
+        updateEmployeeForm.reset();
+
+    } catch (error) {
+
+        console.error(error);
+        alert("Something went wrong while updating employee.");
+
     }
 
 });
