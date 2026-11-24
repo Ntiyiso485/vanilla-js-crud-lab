@@ -167,3 +167,59 @@ deleteBtn.addEventListener("click", async function () {
 
     }
 });
+
+const loadEmployeesBtn = document.getElementById("loadEmployeesBtn");
+
+async function getAllEmployees() {
+
+    const tableBody = document.getElementById("employeeTableBody");
+
+    try {
+
+        const response = await fetch("/api/Employee");
+
+        if (!response.ok) {
+            throw new Error("Failed to retrieve employees");
+        }
+
+        const employees = await response.json();
+
+        tableBody.innerHTML = "";
+
+        if (employees.length === 0) {
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="4">No employees found.</td>
+                </tr>
+            `;
+            return;
+        }
+
+        employees.forEach(employee => {
+
+            const row = document.createElement("tr");
+
+            [employee.id, employee.name, employee.surname, employee.email]
+                .forEach(value => {
+                    const cell = document.createElement("td");
+                    cell.textContent = value ?? "";
+                    row.appendChild(cell);
+                });
+
+            tableBody.appendChild(row);
+
+        });
+
+    } catch (error) {
+
+        console.error(error);
+        alert("Unable to load employees.");
+
+    }
+}
+
+
+getAllEmployees();
+
+
+loadEmployeesBtn.addEventListener("click", getAllEmployees);

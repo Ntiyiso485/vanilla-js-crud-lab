@@ -207,4 +207,45 @@ button:hover {
         width: 100%;
     }
 }
+.employees-container {
+    background: white;
+    padding: 25px;
+    margin: 30px auto;
+    max-width: 900px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.employees-header {
+    margin-bottom: 20px;
+}
+
+.employees-header h2 {
+    margin-bottom: 8px;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+th, td {
+    padding: 14px;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background: #1e293b;
+    color: white;
+}
+
+tbody tr:hover {
+    background: #f1f5f9;
+}
 

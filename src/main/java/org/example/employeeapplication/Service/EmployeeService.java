@@ -5,6 +5,8 @@ import org.example.employeeapplication.Entity.Employee;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
+
 @Service
 public class EmployeeService {
 
@@ -37,4 +39,8 @@ public class EmployeeService {
 
         employeeRepository.delete(employee);
     }
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.findAll();
+    }
+
 }

@@ -4,6 +4,8 @@ import org.example.employeeapplication.Entity.Employee;
 import org.example.employeeapplication.Service.EmployeeService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/Employee")
 public class EmployeeController {
@@ -31,6 +33,10 @@ public class EmployeeController {
         employeeService.deleteEmployee(id);
 
         return "Employee deleted successfully";
+    }
+    @GetMapping
+    public List<Employee> getAllEmployees() {
+        return employeeService.getAllEmployees();
     }
 
 }
