@@ -127,3 +127,43 @@ updateEmployeeForm.addEventListener("submit", async function (event) {
     }
 
 });
+const deleteBtn = document.getElementById("deleteBtn");
+
+deleteBtn.addEventListener("click", async function () {
+
+    const id = document.getElementById("deleteId").value;
+
+    if (!id) {
+        alert("Please enter an employee ID.");
+        return;
+    }
+
+    const confirmDelete = confirm(
+        "Are you sure you want to delete this employee?"
+    );
+
+    if (!confirmDelete) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(`/api/Employee/${id}`, {
+            method: "DELETE"
+        });
+
+        if (!response.ok) {
+            throw new Error("Employee not found or deletion failed.");
+        }
+
+        alert("Employee deleted successfully!");
+
+        document.getElementById("deleteId").value = "";
+
+    } catch (error) {
+
+        console.error(error);
+        alert(error.message);
+
+    }
+});
